@@ -1,7 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 from jdatetime import datetime
-import hydralit_components as hc
 import sqlite3
 
 
@@ -35,39 +34,32 @@ tim = now.strftime("%Y/%m/%d")
 
 
 
+with st.sidebar:
+   menu_id = option_menu (
+      menu_title=None,
+      options=[ "صفحه اصلی","خبرها" , "ویدیوها", "بازیکنان"],
+      icons=["house"],
+      menu_icon="cast",
+      default_index=0,
+      orientation="vertical",
 
-
-menu_dat = [
-
-    
-    {'id':'home','icon': "🏚", 'label':"صفحه اصلی",},
-
-    {"id": "bazikon", "icon": "🙋‍♂️", "label": "بازیکنان"},
-    {'id':'vid','icon':"🎞️",'label':"ویدیوها"},
-    {'id':'news','icon': "📃", 'label':"خبرها"},
-    
-]
-
-over_theme = {'txc_inactive': '#FFFFFF'}
-menu_id = hc.nav_bar(
-    menu_definition=menu_dat,
-    override_theme={'txc_inactive': 'white','menu_background':'#4b5efb','txc_active':'yellow','option_active':'#000000'},
-    
-
-    hide_streamlit_markers=False, 
-    sticky_nav=True, 
-    sticky_mode='pinned', 
-
-)
+      styles={
+        "container" : {"background-color" : "#de7f1b", "border-radius" : "10px",},
+        "icon" : {"color": "#ffffff"},
+        "nav-link" : {"color" : "#ffffff", "--hover-color" : "#49B618", "border-radius" : "5px"},
+        "nav-link-selected" : {"background-color" : "#009200", "border-radius" : "px"},
+        }
+    )
 
 
 
 
-st.subheader("⚽ باشگاه فرهنگی ورزشی دلفین گربدان ⚽")
+
+st.subheader("باشگاه فرهنگی ورزشی دلفین گربدان")
 st.image("logo.png",width=100)
 
 
-if menu_id == "bazikon":
+if menu_id == "بازیکنان":
    
    st.divider()
 
@@ -135,18 +127,18 @@ if menu_id == "bazikon":
 
 
 
-if menu_id == "home":
+if menu_id == "صفحه اصلی":
   
   selected = option_menu (
       menu_title=None,
-      options=[ "چت آنلاین" ,"ادمین", "صفحه اصلی"],
+      options=[ "تیمچت" ,"ادمین", "صفحه اصلی"],
       icons=["phone","key","house" ],
       menu_icon="cast",
       default_index=2,
       orientation="horizontal",
 
       styles={
-         "container": {"background-color": "#4b5efb"},
+         "container": {"background-color": "#de7f1b"},
          "nav-link-selected": {"background-color": "#040b3e"},
          "nav-link": {"font-size": "20px", "text-align": "center_y: 0.0", "margin":"0px", "--hover-color": "#afb8fb"},
 
@@ -235,11 +227,12 @@ if menu_id == "home":
 
 
 
-  if selected == "چت آنلاین":
+  if selected == "تیمچت":
 
     
-          
-    with st.expander("چت آنلاین", expanded=True):
+    st.warning("توجه : برای مشاهده پیام های دیگران به صفحه دیگری بروید و دوباره به صفحه تیمچت بیایید .")
+
+    with st.expander("تیمچت", expanded=True):
       
     #   st.image('g2.png')
 
@@ -272,18 +265,35 @@ if menu_id == "home":
             conn.commit()
 
         # ورود نام کاربری
+        
+           
         username = st.text_input(": نام خود را وارد کنید")
 
         # نمایش پیام‌های موجود
         messages = get_messages()
-
-        # ورودی پیام جدید
         new_message = st.text_input(": پیام خود را وارد کنید")
-        if st.button("ارسال") and username and new_message:
-            add_message(username, new_message)
-            st.experimental_rerun()
+        ersal = st.button("ارسال") 
+        
+        # ورودی پیام جدید
+        if ersal and username and new_message :
+           
+           add_message(username, new_message)
+           st.rerun()
+        
+        elif ersal and username and new_message == "":
+            # add_message(username, new_message)
+            st.error("لطفا پیام‌ خو بنویس" )
 
-        st.subheader("پیام‌ها")
+        elif ersal and new_message and username == "":
+            # add_message(username, new_message)
+            st.error("لطفا اسم خو بنویس")
+
+
+        
+
+
+        st.subheader("⬇️ تیمچت ⬇️")
+        st.divider()
 
         for msg in messages:  # بدون معکوس کردن لیست پیام‌ها
             msg_id, msg_user, msg_text, msg_timestamp = msg
@@ -292,7 +302,7 @@ if menu_id == "home":
             # افزودن دکمه برای حذف پیام
             if st.button("حذف", key=f"delete_{msg_id}"):
                 delete_message(msg_id)
-                st.experimental_rerun()
+                st.rerun()
 
         # بستن اتصال به پایگاه داده
         conn.close()
@@ -342,7 +352,7 @@ if menu_id == "home":
 
 
 
-if menu_id == "vid":
+if menu_id == "ویدیوها":
 
   st.divider()
   c1 , c2  = st.columns(2)
@@ -365,7 +375,7 @@ if menu_id == "vid":
 
 
 
-if menu_id == "news":
+if menu_id == "خبرها":
 
   st.divider()
 
