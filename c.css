@@ -1,13 +1,40 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
 
-[data-testid=stSidebar] {
+[data-testid=stHeader] {
   background: linear-gradient(to left,#03476e,rgb(51, 7, 45));
+
+}
+.stApp{
+  background: linear-gradient(to left,#03476e,rgb(51, 7, 45));
+  direction: rtl;
+  font-family: Lalezar;
+
+}
+img{
+  border-radius: 11px;
+
+}
+[data-testid=stExpander]{
+  background: linear-gradient(to left,#4c7a94,rgb(170, 86, 159));
+  color: white;
+  align-items: center;
+
+}
+
+[data-testid=stSidebar]{
+  background: linear-gradient(to left,#03476e,rgb(51, 7, 45));
+}
+.e14lo1l1.st-emotion-cache-qsoh6x.ex0cdmw0{
+  border-style: groove;
+  border-color: white;
+  background-color: #202024;
+  
 }
 .main.st-emotion-cache-bm2z3a.ea3mdgi8{
 
   background: linear-gradient(to left,#03476e,rgb(51, 7, 45));
-  color: #fdfdfd;
+  /* color: #fdfdfd; */
   direction: rtl;
 
 }
@@ -39,7 +66,7 @@ h3{
   text-align: center;
   border-radius: 11px;
   margin-bottom: 10px;
-  color: #aae778;
+  color: #fafcf9;
 }
 a{
   background: linear-gradient(to right,#b48216,blue);
@@ -205,4 +232,3 @@ img{
   align-items: center;
 
 }
-
